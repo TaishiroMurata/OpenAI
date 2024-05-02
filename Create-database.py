@@ -34,6 +34,36 @@ for row in query_job:
 print(results_list)
 
 
+# Azure OpenAI クライアントの初期化
+client = AzureOpenAI(
+    azure_endpoint="https://zuu-pdev-us2.openai.azure.com/",
+    api_key=os.getenv("AZURE_OPENAI_KEY"),
+    api_version="2024-02-15-preview"
+)
+
+# OpenAIに送るシステムメッセージで、リスト内のtitleだけを取り出すように指示
+message_text = [
+    {"role": "system", "content": "Given the following data, extract only the titles and return them as an array."},
+    {"role": "user", "content": str(results_list)}
+]
+
+# OpenAI APIを呼び出し
+completion = client.chat.completions.create(
+    model="gpt4-turbo-saino01",  # モデル名はデプロイメント名に置き換え
+    messages=message_text,
+    temperature=0.7,
+    max_tokens=800,
+    top_p=0.95,
+    frequency_penalty=0,
+    presence_penalty=0,
+    stop=None
+)
+
+
+print(completion.result)
+
+api_answer = completion.result
+
 """ 
 client = AzureOpenAI(
   azure_endpoint = "https://zuu-pdev-us2.openai.azure.com/", 
@@ -81,7 +111,7 @@ table = bigquery.Table(table_id, schema=schema)
 table = client.create_table(table)
 print("Created table {}.{}.{}".format(table.project, table.dataset_id, table.table_id))
 
-rows_to_insert = results_list
+rows_to_insert = api_ansewer
 
 # データの挿入
 errors = client.insert_rows_json(table, rows_to_insert)
