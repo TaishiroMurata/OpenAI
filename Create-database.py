@@ -13,6 +13,8 @@ ORDER BY title DESC
 LIMIT 5;
 """
 
+
+
 # クエリの実行と結果の取得
 query_job = client.query(query)  # APIリクエストを実行
 
