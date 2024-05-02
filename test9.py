@@ -7,10 +7,3 @@ credentials = service_account.Credentials.from_service_account_file(key_path, sc
 client = bigquery.Client(credentials=credentials, project=credentials.project_id)
 
 
-""" #プロジェクト名
-zuu-infra
-プロジェクト番号
-259543728979
-プロジェクト ID
-zuu-infra
- """
