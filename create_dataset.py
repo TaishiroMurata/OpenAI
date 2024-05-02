@@ -86,10 +86,3 @@ if errors == []:
 else:
     print("Encountered errors while inserting rows: {}".format(errors))
 
-
-# プロジェクト名
-#zuu-infra
-#プロジェクト番号
-#259543728979
-#プロジェクト ID
-#zuu-infra 
